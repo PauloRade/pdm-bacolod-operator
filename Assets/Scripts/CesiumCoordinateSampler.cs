@@ -41,19 +41,19 @@ public class CesiumCoordinateSampler : MonoBehaviour
 
         // 4. Fire off the async task with our parsed numbers
        
-        _ = FetchAndAssignHeight(longitude, latitude);
+        _ = FetchAndAssignHeight(longitude, latitude,0);
     }
 
-    public void RequestHeightFromServer(double longitude, double latitude)
+    public void RequestHeightFromServer(double longitude, double latitude, int ticketNum)
     {
 
    
         // 4. Fire off the async task with our parsed numbers
        
-        _ = FetchAndAssignHeight(longitude, latitude);
+        _ = FetchAndAssignHeight(longitude, latitude, ticketNum);
     }
 
-    private async Task FetchAndAssignHeight(double longitude, double latitude)
+    private async Task FetchAndAssignHeight(double longitude, double latitude,int ticketNum)
     {
         if (cesiumTileset == null) return;
 
@@ -69,7 +69,7 @@ public class CesiumCoordinateSampler : MonoBehaviour
             // The Z value of the output position contains our processed height!
             latestHeight = result.longitudeLatitudeHeightPositions[0].z; 
 
-            markerSpawner.SpawnMarker(longitude, latitude,latestHeight );
+            markerSpawner.SpawnMarker(longitude, latitude,latestHeight ,ticketNum);
             
             Debug.Log($"Height updated to: {latestHeight} meters");
         }

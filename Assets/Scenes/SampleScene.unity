@@ -1145,6 +1145,7 @@ GameObject:
   - component: {fileID: 324044463}
   - component: {fileID: 324044462}
   - component: {fileID: 324044466}
+  - component: {fileID: 324044467}
   m_Layer: 0
   m_Name: MarkerLocationPrefab Dont delete
   m_TagString: Untagged
@@ -1162,7 +1163,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.10260899, y: 0.9947217, z: 0.00036492787, w: 0.000014730576}
   m_LocalPosition: {x: -973.81824, y: -500.07434, z: 0.014013662}
-  m_LocalScale: {x: 1000.00214, y: 0.99999994, z: 1000.00244}
+  m_LocalScale: {x: 1000.004, y: 0.99999994, z: 1000.00433}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1614592547}
@@ -1183,9 +1184,9 @@ MonoBehaviour:
   _detectTransformChanges: 1
   _localToGlobeFixedMatrix:
     c0:
-      x: 930.4679030279317
-      y: 364.42445605165557
-      z: -37.79589220110416
+      x: 930.4696635531475
+      y: 364.4251455740368
+      z: -37.79596371417952
       w: 0
     c1:
       x: -0.3522292399921821
@@ -1193,9 +1194,9 @@ MonoBehaviour:
       z: 0.18147190764340154
       w: 0
     c2:
-      x: -100.8351975224995
-      y: 155.54102369038927
-      z: -982.6719169256817
+      x: -100.83538831129849
+      y: 155.54131798727994
+      z: -982.6737762248096
       w: 0
     c3:
       x: -3410766.9588804794
@@ -1220,7 +1221,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1295,6 +1296,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MarkerManager
   cubeMarker: {fileID: 324044462}
   markerScaleController: {fileID: 1785196835}
+  myTicketNum: 0
+--- !u!114 &324044467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324044460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7be2c07b06d4a480a88053ac0dfc3b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClickLogger
 --- !u!1 &342488819
 GameObject:
   m_ObjectHideFlags: 0

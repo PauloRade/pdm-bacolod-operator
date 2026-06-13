@@ -2,8 +2,6 @@ using UnityEngine;
 using CesiumForUnity; // Don't forget this namespace!
 using Unity.Mathematics;
 
-
-
 public class MarkerManager : MonoBehaviour
 {
     public CesiumGlobeAnchor cubeMarker;
@@ -11,6 +9,8 @@ public class MarkerManager : MonoBehaviour
     public MarkerScaleController markerScaleController;
 
     private float lastScaleValue;
+
+    public int myTicketNum;
 
 
     void Start()
@@ -36,10 +36,10 @@ public class MarkerManager : MonoBehaviour
        
     }
 
-
-
-    public void moveMarkerTo(double longitude, double latitude, double height)
+  
+    public void moveMarkerTo(double longitude, double latitude, double height, int ticketNum)
     {
+        myTicketNum = ticketNum;
         double3 globalCoordinates = new double3(longitude, latitude,height+20);
 
         // 4. Assign the coordinates to the globe anchor. Cesium snaps the object to its globe position automatically.

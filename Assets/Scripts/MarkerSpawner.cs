@@ -7,7 +7,7 @@ public class MarkerSpawner : MonoBehaviour
     [SerializeField] private Transform parentObject;    // Drag the parent GameObject here
 
     // Call this function to spawn the marker
-    public void SpawnMarker(double longitude, double latitude, double height)
+    public void SpawnMarker(double longitude, double latitude, double height, int ticketNum)
     {
       
 
@@ -20,7 +20,7 @@ public class MarkerSpawner : MonoBehaviour
 
         MarkerManager manager = spawnedMarker.GetComponent<MarkerManager>();
 
-        manager.moveMarkerTo(longitude, latitude,height);
+        manager.moveMarkerTo(longitude, latitude,height,ticketNum);
     }
 
  

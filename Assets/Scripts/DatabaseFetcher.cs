@@ -88,7 +88,7 @@ public class DatabaseFetcher : MonoBehaviour
                 if (hasValidLat && hasValidLong)
                 {
                     // Note: Ensure the parameter names/order match your specific Cesium component setup
-                    cesiumCoordinateSampler.RequestHeightFromServer(longitude, latitude);
+                    cesiumCoordinateSampler.RequestHeightFromServer(longitude, latitude, incident.ticketNum);
                 }
                 else
                 {
