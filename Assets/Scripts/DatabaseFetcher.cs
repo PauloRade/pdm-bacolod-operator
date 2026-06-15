@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic; // <-- REQUIRED FOR DICTIONARIES & LISTS
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -9,6 +10,9 @@ public class DatabaseFetcher : MonoBehaviour
     private string token = "IJkTMtZwFfRT7VtqIXrxeNEmCYmFa-jUZDdv9WF6s74=";
 
     public CesiumCoordinateSampler cesiumCoordinateSampler;
+
+    // Key: ticketNum (int), Value: IncidentData object
+    private Dictionary<int, IncidentData> incidentCache = new Dictionary<int, IncidentData>();
 
     void Start()
     {
@@ -77,6 +81,7 @@ public class DatabaseFetcher : MonoBehaviour
                 Debug.Log($"Address: {incident.addressText}");
                 Debug.Log($"Notes: {incident.situationalNotes}");
                 Debug.Log($"Image Ref: {incident.incidentImage}");
+                SaveIncidentToMemory(incident);
 
                 // --- Convert string coordinates to double safely ---
                 double latitude = 0.0;
@@ -108,7 +113,59 @@ public class DatabaseFetcher : MonoBehaviour
             Debug.LogError($"Failed to parse Database JSON: {e.Message}");
         }
     }
+
+
+    public void SaveIncidentToMemory(IncidentData incident)
+    {
+        if (incident == null) return;
+
+        // If the ticket already exists in our collection, update it. Otherwise, add it.
+        if (incidentCache.ContainsKey(incident.ticketNum))
+        {
+            incidentCache[incident.ticketNum] = incident;
+            Debug.Log($"[Memory Storage] Updated existing Incident #{incident.ticketNum} in cache.");
+        }
+        else
+        {
+            incidentCache.Add(incident.ticketNum, incident);
+            Debug.Log($"[Memory Storage] Added new Incident #{incident.ticketNum} to cache. Total stored: {incidentCache.Count}");
+        }
+    }
+
+
+    public IncidentData LoadIncidentFromMemory(int ticketNum)
+    {
+        // Check if our Dictionary contains this ticket key
+        if (incidentCache.TryGetValue(ticketNum, out IncidentData incident))
+        {
+            // Print the retrieved logs to console
+            Debug.Log($"--- [Memory Storage] Incident Data Retrieved for Ticket #{ticketNum} ---");
+            Debug.Log($"Ticket Num: {incident.ticketNum}");
+            Debug.Log($"Reference Code: {incident.referenceCode}");
+            Debug.Log($"Emergency Type: {incident.emergencyType}");
+            Debug.Log($"Severity: {incident.severityThreshold}");
+            Debug.Log($"People Involved: {incident.peopleInvolved}");
+            Debug.Log($"Location: Lat {incident.TextLat}, Long {incident.TextLong}");
+            Debug.Log($"Address: {incident.addressText}");
+            Debug.Log($"Notes: {incident.situationalNotes}");
+            Debug.Log($"Image Ref: {incident.incidentImage}");
+
+            return incident;
+        }
+        else
+        {
+            Debug.LogWarning($"[Memory Storage] Ticket #{ticketNum} is not currently stored in active memory.");
+            return null;
+        }
+    }
+
+
+
+
+
 }
+
+
 
 // Data structures mapped to your new JSON format
 [Serializable]
