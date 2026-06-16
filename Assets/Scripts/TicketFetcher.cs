@@ -20,7 +20,7 @@ public class TicketFetcher : MonoBehaviour
             yield return StartCoroutine(FetchTicketCount());
 
             // Wait for 5 seconds before running the loop again
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(1f);
         }
     }
 

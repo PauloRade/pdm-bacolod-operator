@@ -36,7 +36,7 @@ public class DatabaseFetcher : MonoBehaviour
         }
 
         // Loop from 1 up to and including the target ID
-        for (int i = 1; i <= targetId; i++)
+        for (int i = lastFetchedId; i <= targetId; i++)
         {
             // Convert the integer 'i' to a string (e.g., 1 becomes "1", 27 becomes "27")
             FetchDataById(i.ToString());
