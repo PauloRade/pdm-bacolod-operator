@@ -14,10 +14,34 @@ public class DatabaseFetcher : MonoBehaviour
     // Key: ticketNum (int), Value: IncidentData object
     private Dictionary<int, IncidentData> incidentCache = new Dictionary<int, IncidentData>();
 
+    public TicketSpawner ticketSpawner;
+    private int lastFetchedId = 0;
+
+    public TicketInfoUpdater ticketInfoUpdater;
+
     void Start()
     {
         // Example: Automatically fetching ID "26" on start using the public function
-        FetchDataById("27");
+       
+    }
+
+
+    public void FetchAllDataUpTo(int targetId)
+    {
+        // Safety check to make sure they didn't pass 0 or a negative number
+        if (targetId <= lastFetchedId)
+        {
+            Debug.Log($"DataManager: ID {targetId} has already been fetched or is invalid. Current highest is {lastFetchedId}.");
+            return;
+        }
+
+        // Loop from 1 up to and including the target ID
+        for (int i = 1; i <= targetId; i++)
+        {
+            // Convert the integer 'i' to a string (e.g., 1 becomes "1", 27 becomes "27")
+            FetchDataById(i.ToString());
+        }
+        lastFetchedId = targetId;
     }
 
 
@@ -82,6 +106,7 @@ public class DatabaseFetcher : MonoBehaviour
                 Debug.Log($"Notes: {incident.situationalNotes}");
                 Debug.Log($"Image Ref: {incident.incidentImage}");
                 SaveIncidentToMemory(incident);
+                ticketSpawner.SpawnAsChild(incident.ticketNum,incident.referenceCode,incident.severityThreshold,incident.emergencyType,incident.situationalNotes,incident.addressText);
 
                 // --- Convert string coordinates to double safely ---
                 double latitude = 0.0;
@@ -130,6 +155,12 @@ public class DatabaseFetcher : MonoBehaviour
             incidentCache.Add(incident.ticketNum, incident);
             Debug.Log($"[Memory Storage] Added new Incident #{incident.ticketNum} to cache. Total stored: {incidentCache.Count}");
         }
+    }
+
+    public void ShowTicket(int ticketNum)
+    {
+        IncidentData data = LoadIncidentFromMemory(ticketNum);
+        ticketInfoUpdater.ProcessAndShowTicket(data);
     }
 
 

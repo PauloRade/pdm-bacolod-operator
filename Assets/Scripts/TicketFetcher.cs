@@ -6,11 +6,22 @@ using UnityEngine.Networking;
 public class TicketFetcher : MonoBehaviour
 {
     private string apiUrl = "https://dev.vantiq.com/api/v1/resources/custom/a.a.StateDatabase?token=IJkTMtZwFfRT7VtqIXrxeNEmCYmFa-jUZDdv9WF6s74=&where={\"Id\":1}&props=[\"Data\"]";
-
+    public DatabaseFetcher databaseFetcher;
     void Start()
     {
         // Start the fetch request
-        StartCoroutine(FetchTicketCount());
+        StartCoroutine(FetchTicketCountLoop());
+    }
+    private IEnumerator FetchTicketCountLoop()
+    {
+        while (true)
+        {
+            // Call your actual ticket fetching logic
+            yield return StartCoroutine(FetchTicketCount());
+
+            // Wait for 5 seconds before running the loop again
+            yield return new WaitForSeconds(5f);
+        }
     }
 
     IEnumerator FetchTicketCount()
@@ -47,6 +58,7 @@ public class TicketFetcher : MonoBehaviour
             if (wrapper != null && wrapper.items != null && wrapper.items.Length > 0)
             {
                 int ticketCount = wrapper.items[0].Data.NumberOfTickets;
+                databaseFetcher.FetchAllDataUpTo(ticketCount);
                 Debug.Log($"Success! Number of Tickets: {ticketCount}");
                 
                 // Do something with ticketCount here (e.g., update UI)
