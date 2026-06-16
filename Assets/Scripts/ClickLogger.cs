@@ -3,6 +3,9 @@ using UnityEngine.InputSystem; // REQUIRED for Unity 6 New Input System
 
 public class ClickLogger : MonoBehaviour
 {
+    public MarkerManager markerManager;
+    public TicketSpawner ticketSpawner;
+    public DatabaseFetcher databaseFetcher;
     void Update()
     {
         // 1. Check if the left mouse button was clicked this frame
@@ -18,7 +21,12 @@ public class ClickLogger : MonoBehaviour
                 // 4. Check if the object that got hit is THIS cube
                 if (hit.transform == this.transform)
                 {
-                    Debug.Log("hi");
+                    string message = markerManager.myTicketNum.ToString();
+                    Debug.Log("Focusing Ticket # "+ message);
+                    ticketSpawner.LoopThroughTickets(markerManager.myTicketNum);
+                    databaseFetcher.ShowTicket(markerManager.myTicketNum);
+                    
+
                     
                     // You can call your API fetch functions here!
                     // FetchDataById("27");
@@ -26,4 +34,6 @@ public class ClickLogger : MonoBehaviour
             }
         }
     }
+
+
 }

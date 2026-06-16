@@ -15,6 +15,10 @@ public class TicketManager : MonoBehaviour
 
     public int ticketNum;
 
+    public BorderColorController borderColorController;
+
+    public TicketSpawner ticketSpawner;
+
     /// <summary>
     /// Sets the values of the UI text elements for this ticket.
     /// </summary>
@@ -35,5 +39,7 @@ public class TicketManager : MonoBehaviour
     public void FocusTicket()
     {
         databaseFetcher.ShowTicket(ticketNum);
+        ticketSpawner.LoopThroughTickets(ticketNum);
+
     }
 }
